@@ -128,7 +128,6 @@ public:
   CircularBuffer()
   {
     currPosition = 0;
-    size = 0;
     buffer.clear();
   }
 
@@ -138,13 +137,14 @@ public:
   {
     buffer.clear();
     buffer.resize(_size, 0);
-    size = _size;
     currPosition = 0;
   }
 
   /* Cleans the buffer (sets every value to zero, sets current position to zero) */
   void clean()
   {
+    uint32_t size = buffer.size();
+    
     buffer.clear();
     buffer.resize(size, 0);
     currPosition = 0;
@@ -158,7 +158,7 @@ public:
       return;
 
     buffer[currPosition++] = _s;
-    currPosition %= size;
+    currPosition %= buffer.size();
   }
 
   /* Returns the delayed value from the buffer (look ahead)
@@ -171,18 +171,13 @@ public:
       return buffer[currPosition];
   }
 
-  /* Returns the current (write) position of the buffer
-   * @return The index of the current (write) position */
-  uint32_t getCurrentPosition() const { return currPosition; }
-
-  /* Returns the current size the buffer
-   * @return The current size the buffer (typically in samples) */
-  uint32_t getSize() const { return size; }
+  /* Returns the current size of the buffer
+   * @return The current size of the buffer (typically in samples) */
+  uint32_t getSize() const { return buffer.size(); }
 
 private:
   std::vector<T> buffer;
   uint32_t currPosition;
-  uint32_t size;
 };
 
 //*****************************************************************************************************************************************
@@ -190,8 +185,7 @@ private:
  * @param _qui Graphics context
  * @param _svg The SVG image to be traced out
  * @param _bounds Bounds to trace image to
- * @param _qolorGround Original color "ground" of the image (without opacity)
- * @param _fill Fill path or not */
+ * @param _c Original color of the image */
 static void traceOut(IGraphics& _qui, const ISVG& _svg, const IRECT& _bounds, const IColor& _c)
 {
   NSVGshape* shape = _svg.mImage->shapes;
