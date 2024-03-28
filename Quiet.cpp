@@ -737,14 +737,9 @@ void Quiet::updateLookAhead()
   case 4: // 40 ms
     SetLatency(1764);
     qp.setLookAhead(1764);
+    qp.setLookingAhead(true);
     qurve.setQurveMultiplier(2.5f);
     qurve.setMultiplyQurvature(true);
-    break;
-  default:
-    SetLatency(0);
-    qp.setLookAhead(0);
-    qp.setLookingAhead(false);
-    qurve.setMultiplyQurvature(false);
     break;
   }
 }
