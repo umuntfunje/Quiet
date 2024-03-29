@@ -420,11 +420,11 @@ Quiet::Quiet(const InstanceInfo& _qinfo)
     const IRECT smoothingBounds = bounds.GetPadded(-430, -311, -180, -14);
     _qui->AttachControl(new Qabel(smoothingBounds.GetPadded(-1, -3, -1, -69), qheme, "smooth"));
     _qui->AttachControl(new Qnob(smoothingBounds.GetPadded(-23), qheme, qSmoothing, [_qui](IControl* _this) {
-      WDL_String value;
+      WDL_String theValue;
       const IRECT valueBounds = _qui->GetBounds().GetPadded(-500, -330, -140, -55).GetPadded(-4);
 
-      _this->GetParam()->GetDisplayWithLabel(value);
-      _qui->GetBubbleControl()->As<Qubble>()->showQubble(_this, valueBounds, value.Get());
+      _this->GetParam()->GetDisplayWithLabel(theValue);
+      _qui->GetBubbleControl()->As<Qubble>()->showQubble(_this, valueBounds, theValue.Get());
     }));
 
 
