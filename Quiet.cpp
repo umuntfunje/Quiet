@@ -361,11 +361,11 @@ Quiet::Quiet(const InstanceInfo& _qinfo)
 
 
     auto displayValue = [_qui](IControl* _qaller) {
-      WDL_String value;
+      WDL_String theValue;
       const IRECT valueBounds = _qaller->GetRECT().GetPadded(13, -21, 13, 16).GetPadded(-1);
 
-      _qaller->GetParam()->GetDisplayWithLabel(value);
-      _qui->GetBubbleControl()->As<Qubble>()->showQubble(_qaller, valueBounds, value.Get());
+      _qaller->GetParam()->GetDisplayWithLabel(theValue);
+      _qui->GetBubbleControl()->As<Qubble>()->showQubble(_qaller, valueBounds, theValue.Get());
     };
 
 
@@ -408,11 +408,11 @@ Quiet::Quiet(const InstanceInfo& _qinfo)
     const IRECT depthQabelBounds = bounds.GetPadded(-305, -312, -305, -86); // 90 x 17
     _qui->AttachControl(new Qabel(depthQabelBounds, qheme, "depth"));
     _qui->AttachControl(new Qnob(depthBounds.GetPadded(-9), qheme, qDepth, [_qui](IControl* _this) {
-      WDL_String value;
+      WDL_String theValue;
       const IRECT valueBounds = _qui->GetBounds().GetPadded(-305, -390, -305, 0).GetPadded(-4);
 
-      _this->GetParam()->GetDisplayWithLabel(value);
-      _qui->GetBubbleControl()->As<Qubble>()->showQubble(_this, valueBounds, value.Get());
+      _this->GetParam()->GetDisplayWithLabel(theValue);
+      _qui->GetBubbleControl()->As<Qubble>()->showQubble(_this, valueBounds, theValue.Get());
     }));
 
 
