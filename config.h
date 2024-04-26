@@ -1,7 +1,7 @@
 #define PLUG_NAME "Quiet"
 #define PLUG_MFR "umuntfuNje"
 #define PLUG_VERSION_HEX 0x00010000
-#define PLUG_VERSION_STR "1.5.8"
+#define PLUG_VERSION_STR "1.5.9"
 #define PLUG_UNIQUE_ID 'QieT'
 #define PLUG_MFR_ID 'uNje'
 #define PLUG_URL_STR "https://github.com/umuntfunje/quiet.git"
