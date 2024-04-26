@@ -88,5 +88,5 @@ private:
   void updateSqope(float _input, float _output);
   void updateSqopeL(float _output, float _sidechain); // avoid weird shift on GUI (from inputs)
   void updateSqope(float _input, float _output, float _sidechain);
-  void calculatePhase(int _sampleIndex, double _numBeats, double _samplesPerCycle, double _samplesPerBeat, double _PPQPos);
+  void calculatePhase(int _sampleIndex, const iplug::ITimeInfo& _timeInfo);
 };
