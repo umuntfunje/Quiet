@@ -176,7 +176,7 @@ bool QuietProcessing::processBlock(double** _inputs, double** _outputs, int _fra
     if (lookingAhead)
       for (int s = 0; s < _frames; s++)
       {
-        calculatePhase(s, numBeats, samplesPerCycle, samplesPerBeat, _timeInfo.mPPQPos);
+        calculatePhase(s, _timeInfo);
         quietValue = getQurveValueAtPhase(phase);
 
         for (int c = 0; c < ioChannels; c++)
@@ -188,7 +188,7 @@ bool QuietProcessing::processBlock(double** _inputs, double** _outputs, int _fra
         if (MIDITriggered && !cycle)  // ...fix: some weird shit on the GUI when done with cycle...
           continue;
   
-        if (_showSqope)
+        if (_showSqope) // sketchy but resourceful 
         {
           if (_showSidechain)
           {
@@ -202,7 +202,7 @@ bool QuietProcessing::processBlock(double** _inputs, double** _outputs, int _fra
     else
       for (int s = 0; s < _frames; s++)
       {
-        calculatePhase(s, numBeats, samplesPerCycle, samplesPerBeat, _timeInfo.mPPQPos);
+        calculatePhase(s, _timeInfo);
         quietValue = getQurveValueAtPhase(phase);
   
         for (int c = 0; c < ioChannels; c++)
@@ -211,7 +211,7 @@ bool QuietProcessing::processBlock(double** _inputs, double** _outputs, int _fra
         if (MIDITriggered && !cycle)  // ...fix: some weird shit on the GUI when done with cycle...
           continue;
 
-        if (_showSqope)
+        if (_showSqope) // sketchy but resourceful 
         {
           if (_showSidechain)
             updateSqope(static_cast<float>(_inputs[0][s]), static_cast<float>(_outputs[0][s]), static_cast<float>(_inputs[2][s])); // ...or mono?
