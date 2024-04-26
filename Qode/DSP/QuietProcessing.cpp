@@ -170,10 +170,6 @@ bool QuietProcessing::processBlock(double** _inputs, double** _outputs, int _fra
 {
   if (_timeInfo.mTransportIsRunning)
   {
-    double numBeats = 1 / rate;
-    double samplesPerBeat = sampleRate * (60 / (_timeInfo.mTempo == 0 ? 1 : _timeInfo.mTempo));
-    double samplesPerCycle = samplesPerBeat * numBeats;
-  
     if (!hasTail)
       hasTail = true;
   
@@ -362,20 +358,25 @@ void QuietProcessing::updateSqope(float _input, float _output, float _sidechain)
 }
 
 //*****************************************************************************************************************************************
-inline void QuietProcessing::calculatePhase(int _sampleIndex, double _numBeats, double _samplesPerCycle, double _samplesPerBeat, double _PPQPos)
+inline void QuietProcessing::calculatePhase(int _sampleIndex, const iplug::ITimeInfo& _timeInfo)
 {
   if (tempoSynqd)
   {
+
+double numBeats = 1 / rate;
+    double samplesPerBeat = sampleRate * (60 / (_timeInfo.mTempo == 0 ? 1 : _timeInfo.mTempo));
+    double samplesPerCycle = samplesPerBeat * numBeats;
+
     if (MIDITriggered)
     {
       processMIDI(_sampleIndex);
 
       if (cycle)
       {
-        phase = static_cast<double>(sampleCounter) / _samplesPerCycle;
+        phase = static_cast<double>(sampleCounter) / samplesPerCycle;
         sampleCounter++;
 
-        if (_samplesPerCycle < sampleCounter)
+        if (samplesPerCycle < sampleCounter)
         {
           cycle = false;
           phase = 1; // hmmmm...
@@ -383,7 +384,7 @@ inline void QuietProcessing::calculatePhase(int _sampleIndex, double _numBeats, 
       }
     }
     else
-      phase = std::fmod(_PPQPos + (static_cast<double>(_sampleIndex) / _samplesPerBeat), _numBeats) / _numBeats;
+      phase = std::fmod(_timeInfo.mPPQPos + (static_cast<double>(_sampleIndex) / samplesPerBeat), numBeats) / numBeats;
   }
   else
   {
